@@ -1,0 +1,902 @@
+:root {
+    --bg-color: #ffffff;
+    --alt-bg-color: #f8f9fa;
+    --text-color: #495057;
+    --heading-color: #212529;
+    --accent-color: #007bff; /* Elegant Blue */
+    /* --accent-color: #6f42c1; /* Refined Purple */
+    /* --accent-color: #28a745; /* Sophisticated Green */
+    --border-color: #dee2e6;
+    --white: #fff;
+
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Lato', sans-serif;
+
+    --section-padding-y: 6rem;
+}
+
+/* Basic Reset ... (keep from previous version) */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-secondary); color: var(--text-color); background-color: var(--bg-color); line-height: 1.7; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.container { width: 90%; max-width: 1100px; margin: 0 auto; }
+
+/* Typography ... (keep from previous version) */
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-primary); color: var(--heading-color); font-weight: 600; line-height: 1.3; margin-bottom: 1rem; }
+h1.hero-title { font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 700; margin-bottom: 1.5rem; }
+h2.section-title { font-size: clamp(2rem, 4vw, 2.8rem); text-align: center; margin-bottom: 2.5rem; position: relative; }
+h2.section-title::after { content: ''; display: block; width: 80px; height: 3px; background-color: var(--accent-color); margin: 0.5rem auto 0; border-radius: 2px; }
+p { margin-bottom: 1.25rem; font-size: 1.05rem; }
+.hero-subtitle, .section-intro { font-size: 1.2rem; color: #6c757d; max-width: 750px; margin-left: auto; margin-right: auto; text-align: center; }
+#hero-section .hero-subtitle { text-align: left; max-width: 100%; margin-left:0; }
+.accent-text { color: var(--accent-color); font-weight: 700; }
+.accent-text-animated { color: var(--accent-color); font-weight: 700; /* animation: subtleShine 5s infinite linear; */ }
+
+/* Header & Navigation ... (keep from previous version) */
+#main-header { background-color: rgba(255, 255, 255, 0.95); padding: 1.2rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); backdrop-filter: blur(5px); }
+#main-header nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+.logo { font-family: var(--font-primary); font-size: 1.75rem; font-weight: 700; color: var(--heading-color); text-decoration: none; }
+#main-header nav ul { list-style: none; display: flex; }
+#main-header nav ul li { margin-left: 2.5rem; }
+#main-header nav ul li a { text-decoration: none; color: var(--text-color); font-weight: 600; font-family: var(--font-primary); font-size: 0.95rem; transition: color 0.3s ease; position: relative; }
+#main-header nav ul li a::after { content: ''; position: absolute; width: 0; height: 2px; display: block; margin-top: 5px; right: 0; background: var(--accent-color); transition: width 0.3s ease; -webkit-transition: width 0.3s ease; }
+#main-header nav ul li a:hover::after { width: 100%; left: 0; background-color: var(--accent-color); }
+#main-header nav ul li a:hover, #main-header nav ul li a.active { color: var(--accent-color); }
+
+/* Buttons ... (keep from previous version) */
+.cta-button { display: inline-block; padding: 0.9rem 2.2rem; text-decoration: none; font-family: var(--font-primary); font-weight: 600; border-radius: 50px; font-size: 1rem; transition: all 0.3s ease; border: 2px solid transparent; cursor: pointer; }
+.primary-cta { background-color: var(--accent-color); color: var(--white); margin-top: 1.5rem; }
+.primary-cta:hover { background-color: #0056b3; /* Darken accent */ transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2); }
+.secondary-cta { background-color: transparent; color: var(--accent-color); border: 2px solid var(--accent-color); }
+.secondary-cta:hover { background-color: var(--accent-color); color: var(--white); transform: translateY(-2px); }
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+/* Sections ... (keep from previous version) */
+.section-padding { padding: var(--section-padding-y) 0; }
+.alt-bg { background-color: var(--alt-bg-color); }
+
+/* Hero Section Specifics */
+#hero-section .hero-title,
+#purpose-hero .hero-title { /* Apply to both */
+    color: var(--heading-color); /* Should be near black */
+    /* Optional: a very subtle shadow for pop if needed on complex backgrounds */
+    /* text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3); */
+}
+
+#hero-section .hero-subtitle,
+#purpose-hero .hero-subtitle {
+    color: #555; /* Darker grey for subtitle */
+}
+
+#hero-section .container,
+#purpose-hero .container {
+    position: relative; /* Crucial: ensures it's in a new stacking context */
+    z-index: 1; /* Places it above the .hero-abstract-pastel-bg which has z-index: 0 or is default */
+}
+
+.hero-abstract-pastel-bg {
+    /* ... existing styles ... */
+    z-index: 0; /* Explicitly set it behind the content container */
+}
+
+.hero-abstract-pastel-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind hero content */
+    /* Multiple layered gradients for abstract effect */
+    background-image:
+        radial-gradient(circle at 10% 20%, hsla(200, 80%, 85%, 0.4) 0px, transparent 40%),
+        radial-gradient(circle at 90% 30%, hsla(300, 70%, 90%, 0.35) 0px, transparent 50%),
+        radial-gradient(circle at 50% 80%, hsla(40, 90%, 80%, 0.3) 0px, transparent 45%),
+        linear-gradient(135deg, hsla(180, 50%, 95%, 0.2) 0%, hsla(240, 50%, 95%, 0.1) 100%);
+    /* Add a subtle animation to the gradients if desired */
+    animation: psychedelic 180s infinite alternate ease-in-out;
+}
+
+@keyframes psychedelic {
+    from {
+      filter: hue-rotate(0deg);
+    }
+    to {
+      filter: hue-rotate(360deg);
+    }
+  }
+
+#hero-section .container {
+    position: relative; /* Ensure content is above the abstract background */
+    z-index: 1;
+}
+
+/* Features Grid ... (keep from previous version) */
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
+.feature-item { background-color: var(--bg-color); padding: 2rem; border-radius: 8px; text-align: center; border: 1px solid var(--border-color); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.feature-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.07); }
+.feature-icon { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 1rem; }
+.feature-item h3 { font-size: 1.4rem; margin-bottom: 0.75rem; color: var(--heading-color); }
+
+/* Core Features List ... (keep from previous version) */
+.core-features { list-style: none; padding-left: 0; margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+.core-features li { font-size: 1.1rem; margin-bottom: 0.8rem; padding-left: 2rem; position: relative; font-family: var(--font-primary); font-weight: 300; }
+.core-features li::before { content: '✓'; color: var(--accent-color); position: absolute; left: 0; font-weight: bold; font-size: 1.2em; }
+.disclaimer-text { font-size: 0.9rem; color: #868e96; text-align: center; margin-top: 2.5rem; font-style: italic; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+/* Trusted By Logos ... (keep from previous version) */
+.trusted-logos { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2.5rem 4rem; margin-top: 2.5rem; filter: grayscale(50%); }
+.trusted-logos span { font-family: var(--font-primary); font-size: 1.25rem; color: #adb5bd; opacity: 0.8; transition: opacity 0.3s ease, color 0.3s ease; }
+.trusted-logos span:hover { opacity: 1; color: var(--text-color); }
+
+/* Testimonials Slider */
+.testimonial-slider-wrapper {
+    position: relative;
+    max-width: 750px; /* Max width of the slider content area */
+    margin: 3rem auto 0;
+    overflow: hidden; /* Crucial: Hides slides outside the viewport */
+}
+
+.testimonial-slides {
+    display: flex; /* Lays out slides horizontally */
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth slide transition with easing */
+}
+
+.testimonial-slide {
+    min-width: 100%; /* Each slide takes the full width of the wrapper */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    opacity: 0; /* Start slides as transparent */
+    transform: scale(0.9); /* Start slides slightly scaled down */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    visibility: hidden; /* Hide non-active slides for accessibility and performance */
+
+    /* Re-using .testimonial-card styles from previous iteration, slightly adapted */
+    background-color: var(--bg-color);
+    padding: 2.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.testimonial-slide.active-slide {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible; /* Make active slide visible */
+}
+
+.testimonial-slide p {
+    font-style: italic;
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    color: #555;
+}
+.testimonial-slide p::before {
+    content: "“";
+    font-size: 3rem;
+    color: var(--accent-color);
+    opacity: 0.5;
+    display: block;
+    margin-bottom: -1rem;
+    margin-left: -0.5rem;
+}
+.testimonial-slide footer {
+    font-weight: 600;
+    color: var(--heading-color);
+    text-align: right;
+    font-size: 0.95rem;
+}
+.testimonial-slide .company-accent {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+.star-rating {
+    font-size: 1.5rem;
+    color: #FFD700; /* Gold color for stars */
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.star-rating .half-star-text {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    font-style: italic;
+    margin-left: 0.25em;
+    font-weight: 400;
+}
+
+.slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid var(--border-color);
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.slider-nav:hover {
+    background-color: var(--accent-color);
+    color: var(--white);
+    box-shadow: 0 4px 10px rgba(0,123,255,0.2);
+}
+.prev-slide { left: -15px; } /* Position slightly outside for better clickability */
+.next-slide { right: -15px; }
+
+.slider-dots {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+.slider-dots .dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 6px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none; /* Ensure it's a button, but looks like a dot */
+    padding:0;
+}
+.slider-dots .dot.active-dot {
+    background-color: var(--accent-color);
+    transform: scale(1.2);
+}
+
+
+/* Contact Form ... (keep from previous version) */
+#contact-form { margin-top: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+#contact-form input[type="email"] { width: 100%; padding: 1.1rem 1.5rem; font-size: 1rem; border-radius: 50px; border: 1px solid var(--border-color); background-color: var(--white); color: var(--text-color); transition: border-color 0.3s ease; }
+#contact-form input[type="email"]::placeholder { color: #adb5bd; }
+#contact-form input[type="email"]:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); }
+.cta-final-section { background: linear-gradient(180deg, var(--alt-bg-color) 0%, var(--bg-color) 100%); }
+
+/* Footer ... (keep from previous version) */
+#main-footer { text-align: center; padding: 2.5rem 0; background-color: var(--heading-color); color: #adb5bd; font-size: 0.9rem; }
+#main-footer p { margin-bottom: 0; }
+#main-footer a { color: var(--accent-color); text-decoration: none; transition: color 0.3s ease; }
+#main-footer a:hover { color: var(--white); }
+
+/* Responsive ... (keep from previous version, maybe adjust slider nav pos) */
+@media (max-width: 768px) {
+    #main-header nav ul { display: none; }
+    #main-header nav { justify-content: center; }
+    .hero-title { text-align: center; }
+    #hero-section .hero-subtitle { text-align: center; margin-left:auto; margin-right:auto; }
+    #hero-section .primary-cta { display: block; text-align: center; margin-left: auto; margin-right: auto; max-width: 300px; }
+    .section-intro { font-size: 1.1rem; }
+    .prev-slide { left: 5px; }
+    .next-slide { right: 5px; }
+    .testimonial-slider-wrapper { padding: 0 10px; } /* Prevent buttons from being cut off too much */
+}
+
+/* ... (Keep ALL previous CSS from the "light theme" version) ... */
+
+/* Ironic Text Styling */
+.tiny-tagline {
+    font-size: 0.5em;
+    font-weight: 300;
+    vertical-align: super;
+    opacity: 0.7;
+    margin-left: 2px;
+}
+
+.user-count-claim {
+    margin: 2rem auto;
+    text-align: center;
+    max-width: 500px;
+}
+
+.user-count-claim .big-number {
+    font-size: clamp(2rem, 4vw, 3rem); /* Slightly smaller than H1 but still big */
+    font-family: var(--font-primary);
+    color: var(--accent-color);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.fine-print-1 {
+    font-size: 0.85em;
+    color: #777; /* Lighter than main text */
+    font-style: italic;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+    display: block; /* Ensure it takes its own line if needed */
+}
+
+.fine-print-2 {
+    font-size: 0.7em;
+    color: #999; /* Even lighter */
+    font-style: italic;
+    margin-top: 0.1em;
+    display: block;
+}
+
+.italic-fine { /* For specific emphasis within fine print */
+    font-style: italic;
+    font-weight: 600; /* Make it stand out a bit */
+}
+
+.tiny-footnote {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 1.5rem;
+    font-style: italic;
+}
+
+.ironic-sup {
+    font-size: 0.6em;
+    vertical-align: super;
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+.tiny-feature-disclaimer {
+    font-size: 0.75em;
+    color: #999;
+    font-style: italic;
+    margin-top: 0.5em;
+    line-height: 1.3;
+}
+
+.tiny-testimonial-disclaimer {
+    display: block;
+    font-size: 0.75em;
+    color: #888;
+    font-style: italic;
+    margin-top: 0.5em;
+    line-height: 1.4;
+}
+
+/* Ensure inline fine print doesn't break layout too much */
+#solution-section .section-intro .fine-print-1,
+#engine-section .core-features li .fine-print-1,
+#testimonials-section .testimonial-slide p .fine-print-2,
+#contact-section .disclaimer-text .fine-print-1 {
+    display: inline; /* Keep these on the same line if possible */
+    margin-left: 0.3em;
+}
+
+#engine-section .core-features li .fine-print-1 {
+    font-size: 0.8em; /* Slightly adjust for list context */
+}
+
+/* Ensure footer fine print is readable */
+#main-footer .fine-print-2 {
+    color: #bbb; /* Lighter for dark background */
+    font-size: 0.9em; /* Slightly larger for footer context */
+}
+
+/* ... (Keep ALL previous CSS) ... */
+
+/* Example: ensure line-height for potentially wrapping fine-print */
+.fine-print-1,
+.fine-print-2,
+.tiny-footnote,
+.tiny-feature-disclaimer,
+.tiny-testimonial-disclaimer {
+    line-height: 1.4; /* Adjust as needed */
+}
+
+/* Hero section user count claim - adjust if text gets longer */
+.user-count-claim .big-number {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem); /* Might need to be slightly smaller if text is long */
+    line-height: 1.2;
+}
+
+/* ... (Keep ALL existing CSS from previous versions) ... */
+
+/* Page Title (if different from section titles) */
+.page-title {
+    font-size: clamp(2.8rem, 6vw, 4.2rem); /* Even larger for main page title */
+    text-align: center;
+    margin-bottom: 1rem; /* Adjust as needed */
+}
+#purpose-hero .hero-subtitle { /* Ensure this is centered */
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+
+/* Mission/Vision Statement Box */
+.statement-box {
+    background-color: var(--white); /* Or var(--alt-bg-color) if section is white */
+    padding: 2.5rem 3rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    margin-bottom: 2rem; /* Space before the explanatory text */
+    text-align: center; /* Center the grand statement */
+}
+#mission-statement .statement-box {
+    background-color: var(--white);
+}
+#vision-statement .statement-box {
+    background-color: var(--alt-bg-color);
+}
+
+
+.grand-statement {
+    font-family: var(--font-primary);
+    font-size: clamp(1.5rem, 2.5vw, 2rem); /* Large and impactful */
+    font-weight: 600;
+    color: var(--heading-color);
+    line-height: 1.5;
+    margin-bottom: 0; /* Removed default p margin */
+}
+.grand-statement::before,
+.grand-statement::after {
+    content: "“";
+    font-size: 3em;
+    color: var(--accent-color);
+    opacity: 0.3;
+    display: inline-block; /* Or block on separate lines if preferred */
+    vertical-align: top;
+    line-height: 0.5;
+}
+.grand-statement::after {
+    content: "”";
+    vertical-align: bottom;
+}
+.grand-statement::before { margin-right: 0.2em; }
+.grand-statement::after { margin-left: 0.2em; }
+
+
+/* Absurd Divider */
+.absurd-divider {
+    text-align: center;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    opacity: 0.5;
+    margin: 3rem auto;
+    font-family: var(--font-primary);
+}
+
+/* Core Non-Values List */
+.non-values-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+}
+.non-values-list li {
+    background-color: var(--bg-color); /* Or var(--alt-bg-color) depending on section bg */
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+#core-non-values .non-values-list li {
+    background-color: var(--bg-color);
+}
+
+.non-values-list h3 {
+    font-size: 1.6rem;
+    color: var(--accent-text);
+    margin-bottom: 0.75rem;
+    font-family: var(--font-primary);
+    font-weight: 600;
+}
+.non-values-list p {
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem; /* Reduced margin for tighter look with fine print */
+}
+.non-values-list .fine-print-1,
+.non-values-list .fine-print-2 {
+    display: block; /* Ensure fine print is on its own line here */
+    margin-top: 0.5em;
+    font-size: 0.9em;
+}
+
+/* Specific for active nav link on this page */
+#main-header nav ul li a.active {
+    color: var(--accent-color);
+    font-weight: 700; /* Make active link slightly bolder */
+}
+#main-header nav ul li a.active::after { /* Ensure underline for active link */
+    width: 100%;
+    left: 0;
+    background-color: var(--accent-color);
+}
+
+/* --- Graph Section Styles --- */
+#impact-journey {
+    /* No specific styles needed here other than padding from .section-padding */
+}
+
+.impact-graph-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 4rem auto 0;
+    /* position: relative; /* This container doesn't strictly need it if .graph-area has it */
+}
+
+.graph-area {
+    position: relative; /* VERY IMPORTANT for absolute children */
+    width: 100%;
+    /* Aspect ratio: height is 60% of width. This creates the space for the SVG */
+    padding-bottom: 60%;
+    background-color: rgba(240,240,240,0.5); /* Light grey for visibility during debug */
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-sizing: border-box;
+    /* Padding to make space for labels. The SVG will be positioned within this padding. */
+    /* These values are internal to graph-area for milestone/axis positioning. */
+    /* The SVG itself will ignore this padding as it's positioned absolutely top/left */
+}
+
+.y-axis-label {
+    position: absolute;
+    /* Position relative to .graph-area */
+    left: -9%; /* Small offset from the left edge of graph-area */
+    top: 80%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: left center; /* Better pivot for rotation */
+    white-space: nowrap;
+    font-size: 0.9em;
+    color: var(--text-color);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    opacity: 0.7;
+    z-index: 3; /* Above graph elements */
+}
+
+.x-axis {
+    position: absolute;
+    /* Position relative to .graph-area */
+    bottom: 30px;  /* Small offset from the bottom edge of graph-area */
+    left: 50px;    /* Offset from left edge of graph-area */
+    right: 30px;   /* Offset from right edge of graph-area */
+    height: 2px;
+    background-color: var(--text-color);
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.x-axis-label {
+    position: absolute;
+    /* Position relative to .graph-area */
+    bottom: 5px; /* Below the x-axis line */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9em;
+    color: var(--text-color);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    opacity: 0.7;
+    z-index: 3; /* Above graph elements */
+}
+
+.impact-curve { /* The SVG element */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;    /* Fill the .graph-area (which has padding-bottom for height) */
+    height: 100%;   /* Fill the .graph-area */
+    overflow: visible;
+    z-index: 0;     /* Behind milestones */
+}
+
+/* SVG path should inherit stroke from HTML attribute directly */
+/* .impact-curve path[stroke] { ... } no extra CSS needed if attributes are set */
+
+
+.milestone {
+    position: absolute;
+    /* This transform helps center the entire milestone (dot + label block)
+       based on the 'left' percentage. The dot itself will be centered within this. */
+    transform: translateX(-50%);
+    width: auto; /* Allow it to be as wide as its content, up to a max */
+    max-width: 220px; /* Or whatever looks good to prevent too-wide labels */
+    display: flex; /* Use flexbox for easier alignment of dot and label */
+    flex-direction: column; /* Stack dot above label */
+    align-items: center; /* Center dot and label horizontally within the milestone */
+    z-index: 2;
+}
+
+.milestone-dot {
+    width: 18px;
+    height: 18px;
+    background-color: var(--white);
+    border: 4px solid var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0,123,255,0.3);
+    /* No margin needed here as flexbox on parent handles alignment */
+    flex-shrink: 0; /* Prevent dot from shrinking if label text is long */
+}
+
+/* This rule applies to the dot within the milestone that has the .animated-dot class */
+.milestone.animated-dot .milestone-dot {
+    animation: pulseDot 2s infinite ease-in-out;
+}
+/* The keyframe animation remains the same */
+@keyframes pulseDot {
+    0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,123,255,0.3); }
+    50% { transform: scale(1.2) translateY(-1px); box-shadow: 0 0 20px rgba(0,123,255,0.5); }
+    100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,123,255,0.3); }
+}
+
+
+.milestone-label {
+    margin-top: 12px; /* Space between dot and label */
+    padding: 0.9rem 1.1rem; /* Slightly adjusted padding */
+    background-color: var(--white);
+    border-radius: 8px; /* Slightly more rounded */
+    box-shadow: 0 5px 18px rgba(0,0,0,0.09); /* Softer, slightly larger shadow */
+    border: 1px solid var(--border-color);
+    width: 100%; /* Make label take full width of .milestone (up to max-width) */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    text-align: left;
+}
+
+.milestone-label strong {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    color: var(--heading-color);
+    display: block;
+    font-size: 1.1em; /* Or 1rem for consistency */
+    line-height: 1.3;
+    margin-bottom: 0.25rem; /* Space between title and subtitle */
+}
+.milestone-label span { /* The subtitle like (Circa Yesterday) */
+    font-size: 0.8em;
+    color: var(--accent-color);
+    font-style: italic;
+    display: block;
+    margin-bottom: 0.6rem; /* Space between subtitle and paragraph */
+    line-height: 1.3;
+}
+.milestone-label p { /* The main description */
+    font-size: 0.9em;
+    color: var(--text-color);
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+/* Responsive adjustments for milestone labels */
+@media (max-width: 768px) {
+    .milestone {
+        max-width: 180px; /* Reduce max-width on smaller screens */
+    }
+    .milestone-label {
+        padding: 0.7rem 0.9rem;
+    }
+    .milestone-label strong {
+        font-size: 1em;
+    }
+    .milestone-label span {
+        font-size: 0.75em;
+        margin-bottom: 0.4rem;
+    }
+    .milestone-label p {
+        font-size: 0.85em;
+    }
+
+    /* For very small screens, you might need to make labels stack differently or reduce font sizes further */
+    /* Example: if labels still overlap, you might need to adjust their 'left' or 'bottom'
+       inline styles with JS or more media queries, or make them appear on hover.
+       For this example, we'll rely on adjusting max-width and font sizes. */
+}
+@media (max-width: 480px) {
+    .milestone {
+        max-width: 150px; /* Even smaller */
+        /* If they are still overlapping, you might need to change the left/bottom %
+           via JS or more specific CSS, or rethink the layout for very small screens.
+           For example, making the labels appear above the dot or significantly offset. */
+    }
+    .milestone-dot {
+        width: 14px;
+        height: 14px;
+        border-width: 3px;
+    }
+     .milestone-label strong {
+        font-size: 0.9em;
+    }
+    .milestone-label span {
+        font-size: 0.7em;
+    }
+    .milestone-label p {
+        font-size: 0.8em;
+    }
+}
+
+/* =================================== */
+/*          Styles for Team Page       */
+/* =================================== */
+
+/* Team Hero Section (team.html)
+   Reuses existing .hero-title, .page-title, .hero-subtitle, and .hero-abstract-pastel-bg.
+   The HTML structure should ensure these are applied correctly.
+   Example: <h1 class="hero-title page-title">...</h1>
+            <p class="hero-subtitle">...</p>
+*/
+#team-hero .hero-title {
+    /* Potentially slightly smaller than main page hero if needed, but page-title rules apply */
+    margin-bottom: 1rem; /* Existing .page-title has margin-bottom: 1rem */
+}
+#team-hero .hero-subtitle {
+    text-align: center !important; /* Ensure it's centered as per mission.html hero */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 2rem; /* Consistent with mission page hero subtitle */
+}
+
+
+/* Team Members Showcase Section */
+#team-members-showcase .section-title {
+    /* Uses existing .section-title styles */
+    margin-bottom: 2rem; /* Consistent spacing before intro text */
+}
+
+#team-members-showcase .section-intro {
+    /* Uses existing .section-intro styles */
+    margin-bottom: 3rem; /* Space before the team grid */
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem; /* Consistent with .features-grid gap */
+    /* margin-top is handled by .section-intro margin-bottom */
+}
+
+.team-member-card {
+    background-color: var(--bg-color); /* Section bg is --alt-bg-color, so card is --bg-color */
+    padding: 2rem;
+    border-radius: 8px; /* Consistent with .feature-item, .testimonial-slide */
+    border: 1px solid var(--border-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03); /* Subtle shadow like .testimonial-slide */
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member-card:hover {
+    transform: translateY(-5px); /* Consistent hover effect */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.07); /* Consistent hover shadow */
+}
+
+.team-member-image-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    /* --accent-color is #007bff which is rgb(0, 123, 255) */
+    background-color: rgba(0, 123, 255, 0.1); /* Translucent accent background */
+    color: var(--accent-color); /* Icon character in full accent color */
+    font-size: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto; /* Centered */
+    flex-shrink: 0;
+}
+
+.team-member-image-display {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem auto; /* Centered */
+    flex-shrink: 0;
+
+    /* Image related properties */
+    background-size: cover;       /* Scale the background image to cover the entire container */
+    background-position: center;  /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from tiling */
+
+    /* Fallback background in case the image doesn't load or isn't set */
+    background-color: rgba(0, 123, 255, 0.1);
+
+    /* For potential fallback content (like an icon or initials) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-size: 3.5rem; /* Only applies if there's text/icon content */
+}
+
+.team-member-card h3 {
+    font-family: var(--font-primary); /* Already default for h3 */
+    color: var(--heading-color);    /* Already default for h3 */
+    font-size: 1.5rem; /* Slightly more prominent than feature item h3 */
+    font-weight: 600;       /* Already default for h3 */
+    margin-bottom: 0.5rem; /* Tighter margin for title below */
+    text-align: center;
+}
+
+.team-member-title {
+    font-family: var(--font-primary); /* Using primary font for a "title" feel */
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--accent-color); /* Using accent color for emphasis */
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.team-member-card p:not(.team-member-title):not(.team-member-quirk) { /* Bio paragraph */
+    font-family: var(--font-secondary); /* Default for p */
+    font-size: 0.95rem; /* Slightly smaller than global p for card density */
+    color: var(--text-color);   /* Default for p */
+    line-height: 1.6;
+    margin-bottom: 1rem; /* Space before next element or quirk */
+    flex-grow: 1; /* Allows bios to expand if card heights are uneven */
+}
+
+.team-member-quirk {
+    font-family: var(--font-secondary); /* Default for p */
+    font-size: 0.9rem; /* Similar to .fine-print-1 but slightly more readable in this context */
+    color: #777; /* Matching .fine-print-1 color */
+    font-style: italic;
+    margin-top: 1rem; /* Space above the quirk if bio isn't filling */
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border-color);
+    line-height: 1.5;
+}
+.team-member-quirk .fine-print-1,
+.team-member-quirk .fine-print-2 {
+    display: inline; /* Keep these on the same line as their surrounding text if used within quirk */
+    margin-left: 0.3em;
+}
+
+
+/* Join Our Quest Section (CTA at bottom of team page) */
+#join-our-quest .section-title {
+    /* Uses existing .section-title styles */
+}
+#join-our-quest .section-intro {
+    /* Uses existing .section-intro styles */
+    margin-bottom: 2.5rem; /* Space before button */
+}
+#join-our-quest .button-container {
+    /* Uses existing .button-container for centering */
+}
+#join-our-quest .cta-button {
+    /* Uses existing .cta-button.primary-cta styles */
+}
+#join-our-quest .disclaimer-text {
+    /* Uses existing .disclaimer-text styles */
+    margin-top: 2rem; /* Consistent spacing */
+}
+
+/* Responsive adjustments for team cards if needed */
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+    .team-member-card h3 {
+        font-size: 1.3rem;
+    }
+    .team-member-title {
+        font-size: 0.9rem;
+    }
+    .team-member-card p:not(.team-member-title):not(.team-member-quirk) {
+        font-size: 0.9rem;
+    }
+    .team-member-quirk {
+        font-size: 0.85rem;
+    }
+}
